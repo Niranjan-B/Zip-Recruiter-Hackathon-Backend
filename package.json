@@ -18,6 +18,8 @@
   "homepage": "https://github.com/Niranjan-B/Zip-Recruiter-Hackathon-Backend#readme",
   "dependencies": {
     "body-parser": "^1.17.1",
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "mongoose": "^4.9.7",
+    "nodemailer": "^4.0.1"
   }
 }
