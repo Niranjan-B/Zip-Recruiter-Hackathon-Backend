@@ -1,0 +1,23 @@
+{
+  "name": "zip-r-h",
+  "version": "1.0.0",
+  "description": "backend for zip recruiter hackathon",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Niranjan-B/Zip-Recruiter-Hackathon-Backend.git"
+  },
+  "author": "ninja,pav",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Niranjan-B/Zip-Recruiter-Hackathon-Backend/issues"
+  },
+  "homepage": "https://github.com/Niranjan-B/Zip-Recruiter-Hackathon-Backend#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2"
+  }
+}
