@@ -14,7 +14,7 @@ var ConfirmSlotModel = require('./models/confirm_slot_model');
 var Appointment = require('./models/appointment_model');
 
 var cors = require('cors')
-//mongoose.connect('mongodb://localhost:27017/ziprecruiter');
+//mongoose.connect('mongodb://ec2-204-236-195-193.compute-1.amazonaws.com:27017/ziprecruiter');
 mongoose.connect('mongodb://test1:nbv12345@ds157278.mlab.com:57278/todo');
 //var accessToken = 'ya29.GlxDBObXHsBugc642qJZ5tJLzhXiBzdnfU_2GoP7IUNTUkP1gY8n1tM0L4kw2P6VG6X0Zer1dKw25zGXonv2Rx4vXULDl3zd52CnHIFD61PzCkkXLxg598VNoPJzwg';
 var accessToken;
@@ -41,8 +41,8 @@ var port = 8082;
 passport.use(new GoogleStrategy({
     clientID: config.web.client_id,
     clientSecret: config.web.client_secret,
-    //callbackURL: "http://localhost:8082/auth/callback",
-    callbackURL: "http://localhost:8082/auth/callback",
+    //callbackURL: "http://ec2-204-236-195-193.compute-1.amazonaws.com:8082/auth/callback",
+    callbackURL: "http://ec2-204-236-195-193.compute-1.amazonaws.com:8082/auth/callback",
     scope: ['openid', 'email', 'https://www.googleapis.com/auth/calendar'] 
   },
   function(accessToken, refreshToken, profile, done) {
