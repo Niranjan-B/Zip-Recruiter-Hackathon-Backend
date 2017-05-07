@@ -13,7 +13,8 @@ var mongoose = require('mongoose');
 var ConfirmSlotModel = require('./models/confirm_slot_model');
 var DateTimeModel = require('./models/date_time_model');
 var cors = require('cors')
-mongoose.connect('mongodb://localhost:27017/ziprecruiter');
+//mongoose.connect('mongodb://localhost:27017/ziprecruiter');
+mongoose.connect('mongodb://pgondhi:nbv12345@ds157278.mlab.com:57278/todo');
 
 var port = 8082;
 {
@@ -29,7 +30,8 @@ var port = 8082;
 passport.use(new GoogleStrategy({
     clientID: config.web.client_id,
     clientSecret: config.web.client_secret,
-    callbackURL: "http://localhost:8082/auth/callback",
+    //callbackURL: "http://localhost:8082/auth/callback",
+    //callbackURL: "https://ziprecruiter.herokuapp.com/auth/callback",
     scope: ['openid', 'email', 'https://www.googleapis.com/auth/calendar'] 
   },
   function(accessToken, refreshToken, profile, done) {
