@@ -25,12 +25,11 @@ module.exports.sendMailToSpecifiedUser = function(req, res) {
 };
 
 
-module.exports.sendMail = function(req, res) {
+module.exports.sendMail = function(referenceEmail, cb) {
     var recruiterName = 'Ann Meera'
-    var candidateName = 'Pavan Gondhi'
-    var companyName = 'Supply Frame'
-    var referralName = 'Yogesha MG'
-    var recruiterEmail = 'pavangondhi@gmail.com'
+    var candidateName = 'Niranjan Bhaskar'
+    var companyName = 'Cisco Systems'
+    var referralName = 'Pavan Kumar Gondhi'
     var mailGenerator = new Mailgen({
     theme: 'default',
     product: {
@@ -52,7 +51,7 @@ var email = {
             button: {
                 color: '#22BC66', // Optional action button color 
                 text: 'Select your Choice',
-                link: 'http://localhost:8082/SelectTimeSlot?Recruiter='+recruiterName+'&&Referral='+referralName
+                link: 'http://localhost:8082/SelectTimeSlot?hr_email=ziprecruiter784@gmail.com&&referral_email='+referenceEmail
             }
         },
         outro: 'Appreciate your time. Thank You.'
@@ -83,18 +82,21 @@ require('fs').writeFileSync('preview.html', emailBody, 'utf8');
     });
     let mailOptions = {
         from: recruiterName, 
-        to: recruiterEmail, 
+        to: referenceEmail, 
         subject: 'Request for Phone Appointment for Reference check of '+candidateName, 
         html: emailBody, 
         text: emailText,
     };
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            return console.log(error);
+            cb(error);
         }
         console.log('Message %s sent: %s', info.messageId, info.response);
-        res.json({"status": "email sent"});
+        cb();
     });
 
 
 };
+
+
+

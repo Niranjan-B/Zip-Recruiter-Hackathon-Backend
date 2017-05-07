@@ -1,38 +1,25 @@
 doctype html
 html
-  head
-   title Sign Up
-   style(type="text/css").
-    .container {
-    width: 300px;
-    clear: both;
-    }
-    input {
-       width: 100%; clear: both;
-      }
+  head   
 
 
   body
     .container
 
-      h1 Sign Up
+      h1 Select a 15 Min Slot
+      
+      form(name = "find", action = "/updateTimeSlot", method = "post")
 
-      form(name = "find", action = "/api/0.1/users/create", method = "post")
-          select
-            for date in slotObj.available_dates
-              for times in da
-              option(value=date) date
-        label Username
-        input(type="text", name="username", id="username")
-        br
-        label Email
-        input(type="text", name="email", id="email")
-        br
-        label Password
-        input(type="password", name="password", id="password")
-        br
-        label Confirm Password
-        input(type="password", name="repeat_password", id="confirmPassword")
+        label   
+            select(name="selectedDate")
+              for date in slotObj.available_dates
+                option(value=date) #{date}
+
+
         br
         br
-        input(type="submit", value="Sign Up")
+        input(type="hidden", value=slotObj.hr_email name="hr_email")
+        input(type="hidden", value=slotObj.referral_email name="referral_email")
+        input(type="submit", value="Submit")
+
+        

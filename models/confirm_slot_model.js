@@ -6,10 +6,7 @@ var Schema = mongoose.Schema;
 var ConfirmSlotModel = new mongoose.Schema({
     hr_email : { type: String },
     referral_email: { type: String },
-    available_dates : [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'DateTimeModel'
-    }]
+    available_dates : [ String ]
 });
 
 module.exports = mongoose.model('ConfirmSlotModel', ConfirmSlotModel);
