@@ -12,7 +12,7 @@ var session = require('express-session');
 var mongoose = require('mongoose');
 var ConfirmSlotModel = require('./models/confirm_slot_model');
 var DateTimeModel = require('./models/date_time_model');
-
+var cors = require('cors')
 mongoose.connect('mongodb://localhost:27017/ziprecruiter');
 
 var port = 8082;
@@ -23,6 +23,7 @@ var port = 8082;
     app.use(session({ secret: 'keyboard cat' }));
     app.use(passport.initialize());
     app.use('/api', router);
+    app.use(cors());
 }
 
 passport.use(new GoogleStrategy({
@@ -64,9 +65,17 @@ app.all('/', function(req, res){
   });
 });
 
+
 app.all('/getAppointment', function(req, res){
-  
-  if(!req.session.access_token) return res.redirect('/auth');
+    console.log("Before  token")
+
+if(!req.session.access_token) 
+ {
+    console.log(req.session.access_token)
+
+  return res.redirect('/auth');
+  }
+    console.log("After token")
   var accessToken = req.session.access_token;
   var body = {
   "timeMin": req.body.timeMin,
@@ -171,10 +180,25 @@ router.post('/confirm_time_slot', function(req, res) {
 });
 
 // ----------------------------------------------------------------------------------------------------
+router.get('/confirm_time_slot', function(req,res) {
+  var hr_email = req.query.hr_email 
+  var referral_email = req.query.referral_email
+ 
+  confirmSlotModel.findOne({'hr_email':hr_email, 'referral_email':referral_email} , function(err, slot) {
+    if (err) {
+      res.json({"status": "error during db transaction" + err});
+    } 
+    else {
+      res.render("selectChoice.jade", {layout:false, slotObj:slot});
+    }
+  })
 
+
+});
 
 
 router.post('/send_mail', mailController.sendMailToSpecifiedUser);
+app.all('/sendmail', mailController.sendMail);
 
 
 app.listen(port);
