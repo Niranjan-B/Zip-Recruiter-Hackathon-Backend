@@ -31,7 +31,7 @@ passport.use(new GoogleStrategy({
     clientID: config.web.client_id,
     clientSecret: config.web.client_secret,
     //callbackURL: "http://localhost:8082/auth/callback",
-    //callbackURL: "https://ziprecruiter.herokuapp.com/auth/callback",
+    callbackURL: "https://ziprecruiter.herokuapp.com/auth/callback",
     scope: ['openid', 'email', 'https://www.googleapis.com/auth/calendar'] 
   },
   function(accessToken, refreshToken, profile, done) {
