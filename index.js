@@ -14,7 +14,7 @@ var ConfirmSlotModel = require('./models/confirm_slot_model');
 var DateTimeModel = require('./models/date_time_model');
 var cors = require('cors')
 //mongoose.connect('mongodb://localhost:27017/ziprecruiter');
-mongoose.connect('mongodb://pgondhi:nbv12345@ds157278.mlab.com:57278/todo');
+mongoose.connect('mongodb://test1:nbv12345@ds157278.mlab.com:57278/todo');
 
 var port = 8082;
 {
