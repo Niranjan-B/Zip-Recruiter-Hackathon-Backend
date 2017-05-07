@@ -64,32 +64,59 @@ app.all('/', function(req, res){
   });
 });
 
-app.all('/:calendarId', function(req, res){
+app.all('/getAppointment', function(req, res){
   
   if(!req.session.access_token) return res.redirect('/auth');
+  var accessToken = req.session.access_token;
+  var body = {
+  "timeMin": req.body.timeMin,
+  "timeMax": req.body.timeMax,
+  "timeZone": "America/Los_Angeles",
+  "items": [
+    {
+      "id": req.body.id
+    }
+  ]
+}
+  gcal(accessToken).freebusy.query(body, function(err, data) {
+    if(err) return res.send(500,err);
+    return res.send(data.calendars.primary.busy);
+
+  });
+
+});
+
+app.all('/createAppointment', function(req, res){
   
-  var accessToken     = req.session.access_token;
-  var calendarId      = req.params.calendarId;
-  
-  gcal(accessToken).events.list(calendarId, function(err, data) {
+  if(!req.session.access_token) return res.redirect('/auth');
+  var accessToken = req.session.access_token;
+  var params = { "sendNotifications": true }
+  var email = "primary"
+  var event = {
+  'summary': req.body.subject,
+  'location': 'Phone Interview',
+  'description': 'Reference check for candidate '+req.body.candidate,
+  'start': {
+    'dateTime': req.body.starttime,
+    'timeZone': 'America/Los_Angeles',
+  },
+  'end': {
+    'dateTime': req.body.endtime,
+    'timeZone': 'America/Los_Angeles',
+  },
+  'attendees': [
+    {'email': req.body.referral},
+  ]
+};
+
+  gcal(accessToken).events.insert(email, event, params, function(err, data) {
     if(err) return res.send(500,err);
     return res.send(data);
   });
+
 });
 
-app.all('/:calendarId/add', function(req, res){
-  
-  if(!req.session.access_token) return res.redirect('/auth');
-  
-  var accessToken     = req.session.access_token;
-  var calendarId      = req.params.calendarId;
-  var text            = req.query.text || 'Hello World';
-  
-  gcal(accessToken).events.quickAdd(calendarId, text, function(err, data) {
-    if(err) return res.send(500,err);
-    return res.redirect('/'+calendarId);
-  });
-});
+
 
 // --------------------------------------- function to confirm slot -----------------------------------
 router.post('/confirm_time_slot', function(req, res) {
@@ -145,19 +172,7 @@ router.post('/confirm_time_slot', function(req, res) {
 
 // ----------------------------------------------------------------------------------------------------
 
-app.all('/:calendarId/:eventId/remove', function(req, res){
-  
-  if(!req.session.access_token) return res.redirect('/auth');
-  
-    var accessToken     = req.session.access_token;
-    var calendarId      = req.params.calendarId;
-    var eventId         = req.params.eventId;
-  
-    gcal(accessToken).events.delete(calendarId, eventId, function(err, data) {
-        if(err) return res.send(500,err);
-        return res.redirect('/'+calendarId);
-    });
-});
+
 
 router.post('/send_mail', mailController.sendMailToSpecifiedUser);
 
